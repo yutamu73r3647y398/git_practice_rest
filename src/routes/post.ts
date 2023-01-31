@@ -57,7 +57,7 @@ postRouter.get("/posts/:postId", ensureAuthUser, async (req, res, next) => {
 });
 
 postRouter.post(
-  "/create_post",
+  "/posts",
   ensureAuthUser,
   body("content", "Content can't be blank").notEmpty(),
   async (req, res, next) => {
