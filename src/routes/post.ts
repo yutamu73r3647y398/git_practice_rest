@@ -7,7 +7,7 @@ import {ensureAuthUser} from "@/middlewares/authentication";
 import {ensureOwnerOfPost} from "@/middlewares/current_user";
 export const postRouter = express.Router();
 
-postRouter.get("/get_posts", ensureAuthUser, async (req, res) => {
+postRouter.get("/posts", ensureAuthUser, async (req, res) => {
   const posts = await Post.all();
   const postsWithUser = await Promise.all(
     posts.map(async post => {
@@ -23,7 +23,7 @@ postRouter.get("/get_posts", ensureAuthUser, async (req, res) => {
   });
 });
 
-postRouter.get("/new_post", ensureAuthUser, (req, res) => {
+postRouter.get("/posts/new", ensureAuthUser, (req, res) => {
   res.render("posts/new", {
     post: {
       content: "",
@@ -32,7 +32,8 @@ postRouter.get("/new_post", ensureAuthUser, (req, res) => {
   });
 });
 
-postRouter.get("/get_post/:postId", ensureAuthUser, async (req, res, next) => {
+// "/posts/:postId"から変更
+postRouter.get("/posts/:postId", ensureAuthUser, async (req, res, next) => {
   const {postId} = req.params;
   const post = await Post.find(Number(postId));
   if (!post || !post.id)
@@ -80,7 +81,8 @@ postRouter.post(
     const post = new Post(content, currentUserId);
     await post.save();
     req.dialogMessage?.setMessage("Post successfully created");
-    res.redirect("/get_posts");
+    res.redirect("/posts");
+    // "/posts”ｓ”から変更
   }
 );
 
@@ -115,7 +117,9 @@ postRouter.post(
     post.content = content;
     await post.update();
     req.dialogMessage?.setMessage("Post successfully edited");
-    res.redirect("/get_posts");
+    res.redirect("/posts");
+        // "/posts”ｓ”から変更
+
   }
 );
 
@@ -127,6 +131,8 @@ postRouter.post(
     const post = res.locals.post;
     await post.delete();
     req.dialogMessage?.setMessage("Post successfully deleted");
-    res.redirect("/get_posts");
+    res.redirect("/posts");
+        // "/posts”ｓ”から変更
+
   }
 );

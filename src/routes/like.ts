@@ -14,7 +14,8 @@ likeRouter.post("/:postId", ensureAuthUser, async (req, res, next) => {
   }
   const like = new Like(currentUserId, Number(postId));
   await like.save();
-  res.redirect(`/get_post/${postId}`);
+  res.redirect(`/posts/${postId}`);
+  // `/posts/${postId}`から変更
 });
 
 likeRouter.delete("/:postId", ensureAuthUser, async (req, res, next) => {
@@ -27,5 +28,6 @@ likeRouter.delete("/:postId", ensureAuthUser, async (req, res, next) => {
   }
   const like = await Like.find(currentUserId, Number(postId));
   await like?.delete();
-  res.redirect(`/get_post/${postId}`);
+  res.redirect(`/posts/${postId}`);
+  // `/posts/${postId}`から変更
 });
