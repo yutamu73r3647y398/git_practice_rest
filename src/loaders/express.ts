@@ -5,6 +5,7 @@ import helmet from "helmet";
 import logger from "morgan";
 import path from "path";
 import methodOverride from "method-override";
+// method o-ba-raido
 import {homeRouter} from "@/routes/home";
 import {userRouter} from "@/routes/user";
 import {authRouter} from "@/routes/auth";
